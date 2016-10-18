@@ -1,0 +1,297 @@
+<html>
+  <head>
+    <title>Angular 2 QuickStart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="bootstrap.css" rel="stylesheet" type="text/css" media="all"> 
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    <script src="systemjs.config.js"></script>
+    <script>
+      System.import('app').catch(function(err){ console.error(err); });
+    </script>
+
+    <style>
+      *, body {
+        font-size: 14px;
+        font-family: "Lucida Sans Typewriter",monospace;
+	      text-decoration: none;
+        box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+      }
+
+      html, body {
+        background: #ececec;
+        /* DDF0EE *//*http://royvanrijn.com/blog/2010/06/creating-shazam-in-java/*/ /*https://0110.be/releases/TarsosDSP/TarsosDSP-2.3/*/
+      }
+
+      my-table-viewer {
+        width:100%; 
+        padding-left:50px; 
+        padding-right: 50px; 
+        display: inline-block; 
+        box-sizing: border-box; 
+        position: relative;
+      }
+
+      my-table, my-table-config {
+        width:100%; 
+        min-height: 20px;
+      }
+
+      my-table-row, my-table-header, my-table-header-config {
+        display: flex; 
+        flex-direction: row; 
+        flex-wrap: nowrap; 
+        justify-content: flex-start; 
+        /*background-color: #FFF;*/
+      }
+
+      my-table-view-used-configurer div.row, my-table-view-available-configurer div.row {
+        display: flex; 
+        flex-direction: row; 
+        flex-wrap: nowrap; 
+        justify-content: flex-start; 
+        width: 100%;
+      }
+
+      my-table-cell, my-table-cell-header, my-table-cell-config {
+				border-left: 1px solid #FFF;
+				/*padding: 5px 5px 5px 5px;*/
+        display: flex;
+        align-self: stretch;
+        flex-wrap: nowrap;
+        background-color: #FFF;
+      }
+
+      my-table-cell-config, my-table-configurer my-table-cell {
+        flex-grow: 0;
+        flex-shrink: 0; 
+      }
+
+      my-table-view-cel-configurer {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 5px 10px 5px 10px;
+        background: repeating-linear-gradient(
+          -45deg,
+          #ececec,
+          #ececec 3px,
+          transparent 3px,
+          transparent 6px
+        );
+        background-color: #bdd5f3;
+      }
+
+      my-table-view-cel-configurer > div > div {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 5px 10px 5px 10px;
+        background-color: #bdd5f3;
+      }
+
+      my-table-view-used-configurer my-table-view-cel-configurer {
+        flex-basis: 0;
+        flex-grow: 1;
+      }
+
+      my-table-view-available-configurer my-table-view-cel-configurer {
+        flex-basis: auto;
+        flex-grow: 0;
+      }
+/*
+background: repeating-linear-gradient(
+  -45deg,
+  transparent,
+  transparent 10px,
+  #dce7f5 10px,
+  #dce7f5 20px
+);
+*/
+      my-table-header-config {
+        position: relative;
+        background-color: #c0c0c0;
+      }
+
+			my-table-cell:last-child, my-table-cell-header:last-child, my-table-cell-config:last-child {
+				border-right: 1px solid #000; 
+			}
+
+      my-table-header > my-table-cell, my-table-header > my-table-cell-header, my-table-header-config > my-table-cell-config {
+				background-color: #dce7f5;
+        position: relative;
+      }
+
+      my-table-cell > div, my-table-cell-header > div, my-table-cell-config > div {
+				padding: 5px 10px 5px 10px;
+        border: 5px solid #fff;
+        width: 100%;
+      }
+
+      my-table-metric my-table-cell > div, my-table-metric my-table-cell-header > div, my-table-metric my-table-cell-config > div {
+        width: auto;
+      }
+
+      my-table-header > my-table-cell > div, my-table-header > my-table-cell-header > div, my-table-row > my-table-cell > div {
+        overflow:hidden; 
+        white-space: nowrap; 
+        text-overflow: ellipsis;      
+      }
+
+/*
+      my-table-row > my-table-cell {
+        overflow:hidden; 
+        white-space: nowrap; 
+        text-overflow: ellipsis;      
+      }
+*/
+      my-table-metric > my-table-cell, my-table-metric > my-table-cell-header, my-table-metric > my-table-cell > div {
+        padding-top: 0px;
+        padding-bottom: 0px;
+      }
+
+      my-table-col-resizer {
+        flex-basis: 3px;
+        flex-shrink: 0;
+        flex-grow: 0;
+        width: 3px; 
+        float: right; 
+        cursor: col-resize;
+        background-color: #aeaeae;
+      }
+
+      my-table-configurer {
+        padding-top: 40px; 
+      }
+
+      my-table-used-config, my-table-configurer {
+        width:100%; 
+        display: inline-block; 
+        box-sizing: border-box; 
+        position: relative;
+      }
+
+      my-table-available-config > my-table-header-config {
+        min-height: 40px;
+        width:100%; 
+        /*background-color: #FFF;*/ 
+        overflow-x: scroll;
+        border: 3px dashed #9a9a9a;
+      }
+
+      my-table-used-config my-table-header-config {
+        min-height: 40px;
+        border-top: 3px dashed #9a9a9a;
+        padding-top: 40px;
+      }
+
+      my-table-used-config my-table-header-config.config-left, my-table-used-config my-table-header-config.config-right {
+        border-left: 3px dashed #9a9a9a;
+        border-right: 3px dashed #9a9a9a;
+      }
+
+      my-table-used-config my-table-row {
+        background-color: #c0c0c0;
+        /*border-left: 3px solid transparent;*/
+        /*border-right: 3px solid transparent;*/
+      }
+
+      my-table-used-config my-table-row.config-left, my-table-used-config my-table-row.config-right {
+        border-left: 3px dashed #9a9a9a;
+        border-right: 3px dashed #9a9a9a;
+      }
+
+      my-table-used-config my-table-row.last-row {
+        border-bottom: 3px dashed #9a9a9a;
+      }
+
+      my-table-used-config my-table-header-config.config-left, my-table-used-config my-table-header-config.config-right,
+      my-table-used-config my-table-row.config-left, my-table-used-config my-table-row.config-right {
+        min-width: 50px;
+        flex-grow: 0;
+        flex-shrink: 0;
+      }
+
+      my-table-used-config, my-table-used-config my-table-header-config.config-view,
+      my-table-used-config my-table-row.config-view {
+        width: 100%;
+        flex-grow: 10;
+        flex-shrink: 10;
+      }
+
+      .config-padding-left {
+        padding-left: 50px;
+      }
+
+      .config-padding-right {
+        padding-right: 50px;
+      }
+
+      my-table-cell-resizer > div {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: inline-block;
+      }
+
+      my-table-cell-resizer td {
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+
+      my-table-cell-resizer div my-table {
+
+      }
+
+      my-table-view-configurer p {
+        margin-top: .5em;
+        margin-bottom: .5em;
+      }
+
+      my-table-view-configurer > p {
+        margin-top: 2em;
+      }
+
+      button.bnt {
+        padding: 3px 10px 3px 10px; 
+        border: 1px solid #4178be; 
+        color: #4178be;
+      }
+
+      .draggable {
+	      cursor: pointer;
+      }
+
+      .repeatable, .repeatable > div > div {
+        background-color : rgb(84, 229, 185);
+      }
+      
+      .dnd-src {
+        opacity: 0.4;
+      }
+
+      .dnd-over {
+        background-color: #FF0000;
+      }
+
+      [draggable] {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-user-drag: element;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <my-app>Loading...</my-app>
+  </body>
+</html>
