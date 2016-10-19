@@ -361,7 +361,7 @@ export class TableMetadata {
     }
 
     private adjustViews() {
-        if ((this.views.length>0) && (this.views[this.views.length-1].getColumns().length==0)) {
+        if ((this.views.length>1) && (this.views[this.views.length-1].getColumns().length==0)) {
             this.views.splice(this.views.length-1, 1);
         }
     }
