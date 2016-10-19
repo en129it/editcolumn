@@ -232,23 +232,25 @@ export class TableMetadata {
                 break;
         }
 
-        if (srcView==targetView) {
-            var srcColumnIndex = srcView.indexOfColumn(column);
-            if (srcColumnIndex==indexInView) {
-                // Nothing to move
+        if (srcView!=null) {
+            if (srcView==targetView) {
+                var srcColumnIndex = srcView.indexOfColumn(column);
+                if (srcColumnIndex==indexInView) {
+                    // Nothing to move
+                    if (isNewTargetView) {
+                        this.views.splice(this.views.length-1);
+                    }
+                    this.notifyListeners(); //TODO to remove
+                    return;
+                }
+            } else if ((ViewType.VIEW==srcView.getViewType()) && (ViewType.VIEW==targetView.getViewType()) && (srcView.getColumns().length==1) && (this.views.indexOf(srcView)<this.views.indexOf(targetView))) {
+                // Forbid the move as it will create an empty row in the middle of the table
                 if (isNewTargetView) {
                     this.views.splice(this.views.length-1);
                 }
                 this.notifyListeners(); //TODO to remove
                 return;
             }
-        } else if ((ViewType.VIEW==srcView.getViewType()) && (ViewType.VIEW==targetView.getViewType()) && (srcView.getColumns().length==1) && (this.views.indexOf(srcView)<this.views.indexOf(targetView))) {
-            // Forbid the move as it will create an empty row in the middle of the table
-            if (isNewTargetView) {
-                this.views.splice(this.views.length-1);
-            }
-            this.notifyListeners(); //TODO to remove
-            return;
         }
 
         this.removeColumnHelper(column);
